@@ -20,6 +20,9 @@ project "Praline"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "PralinePCH.h"
+    pchsource "Praline/src/PralinePCH.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",

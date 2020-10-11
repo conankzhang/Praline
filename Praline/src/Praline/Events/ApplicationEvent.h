@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Praline
 {
 	class PRALINE_API WindowResizeEvent : public Event

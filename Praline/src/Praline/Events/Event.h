@@ -2,9 +2,6 @@
 
 #include "Praline/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace Praline
 {
 	// Events are currently blocking
