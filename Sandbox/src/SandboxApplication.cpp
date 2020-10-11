@@ -18,3 +18,4 @@ Praline::Application* Praline::CreateApplication()
 {
 	return new Sandbox();
 }
+

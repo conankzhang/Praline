@@ -16,3 +16,4 @@ namespace Praline
 	// Defined by client
 	Application* CreateApplication();
 }
+
