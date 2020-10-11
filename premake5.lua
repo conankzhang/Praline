@@ -12,6 +12,12 @@ workspace "Praline"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder
+IncludeDir = {}
+IncludeDir["GLFW"] = "Praline/vendor/GLFW/include"
+
+include "Praline/vendor/GLFW"
+
 project "Praline"
     location "Praline"
     kind "SharedLib"
@@ -32,7 +38,14 @@ project "Praline"
     includedirs
     {
         "%{prj.name}/src",
-        "%{prj.name}/vendor/spdlog/include"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{IncludeDir.GLFW}"
+    }
+
+    links
+    {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"

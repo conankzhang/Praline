@@ -1,3 +1,6 @@
 [submodule ".\\Praline\\vendor\\spdlog"]
 	path = .\\Praline\\vendor\\spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Praline/vendor/GLFW"]
+	path = Praline/vendor/GLFW
+	url = https://github.com/TheCherno/GLFW

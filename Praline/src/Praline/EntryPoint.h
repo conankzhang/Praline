@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 {
 	Praline::Log::Init();
 	PRALINE_CORE_INFO("Core Initialized");
-	PRALINE_INFO("Client Initialized");
+	PRALINE_INFO("Application Initialized");
 
 	auto application = Praline::CreateApplication();
 	application->Run();

@@ -1,16 +1,20 @@
 #pragma once
 
 #include "Core.h"
+#include "Window.h"
 
 namespace Praline
 {
-	class PRALINE_API Application
+	class Application
 	{
 	public:
-		Application();
-		virtual ~Application();
+		PRALINE_API Application();
+		PRALINE_API virtual ~Application();
 
-		void Run();
+		PRALINE_API void Run();
+	private:
+		std::unique_ptr<Window> m_Window;
+		bool m_Running = true;
 	};
 
 	// Defined by client
