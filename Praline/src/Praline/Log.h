@@ -35,3 +35,4 @@ namespace Praline
 #define PRALINE_CLIENT_ERROR(...) ::Praline::Log::GetClientLogger()->error(__VA_ARGS__)
 #define PRALINE_CLIENT_FATAL(...) ::Praline::Log::GetClientLogger()->fatal(__VA_ARGS__)
 
+
