@@ -41,6 +41,7 @@ namespace Praline
 		virtual std::string ToString() const { return GetName(); }
 
 		inline bool IsInCategory(int category) const { return GetCategoryFlags() & category; }
+		inline bool Handled() const { return m_Handled; }
 
 	protected:
 		bool m_Handled = false;
