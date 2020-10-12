@@ -10,9 +10,13 @@
 	#error Praline only supports Windows!
 #endif
 
-#ifdef PRALINE_ENABLEASSERTS
-	#define PRALINE_CORE_ASSERT(x, ...) {if(!(x)) {PRALINE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak()}}
-	#define PRALINE_ASSERT(x, ...) {if(!(x)) {PRALINE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak()}}
+#ifdef PRALINE_DEBUG
+	#define PRALINE_ENABLE_ASSERTS
+#endif
+
+#ifdef PRALINE_ENABLE_ASSERTS
+	#define PRALINE_CORE_ASSERT(x, ...) {if(!(x)) {PRALINE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
+	#define PRALINE_ASSERT(x, ...) {if(!(x)) {PRALINE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
 #else
 	#define PRALINE_CORE_ASSERT(x, ...)
 	#define PRALINE_ASSERT(x, ...)
