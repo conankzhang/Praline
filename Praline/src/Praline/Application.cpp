@@ -5,7 +5,7 @@
 #include "Log.h"
 #include "Layer.h"
 
-#include "GLFW/glfw3.h"
+#include <glad/glad.h>
 
 namespace Praline
 {

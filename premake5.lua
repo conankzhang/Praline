@@ -15,8 +15,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder
 IncludeDir = {}
 IncludeDir["GLFW"] = "Praline/vendor/GLFW/include"
+IncludeDir["Glad"] = "Praline/vendor/GLAD/include"
 
 include "Praline/vendor/GLFW"
+include "Praline/vendor/Glad"
 
 project "Praline"
     location "Praline"
@@ -39,12 +41,14 @@ project "Praline"
     {
         "%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}"
     }
 
     links
     {
         "GLFW",
+        "Glad",
         "opengl32.lib"
     }
 
@@ -56,7 +60,8 @@ project "Praline"
         defines
         {
             "PRALINE_PLATFORM_WINDOWS",
-            "PRALINE_BUILD_DLL"
+            "PRALINE_BUILD_DLL",
+            "GLFW_INCLUDE_NONE"
         }
 
         postbuildcommands
