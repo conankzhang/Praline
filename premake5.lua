@@ -18,9 +18,11 @@ IncludeDir["GLFW"] = "Praline/vendor/GLFW/include"
 IncludeDir["Glad"] = "Praline/vendor/GLAD/include"
 IncludeDir["ImGui"] = "Praline/vendor/ImGui"
 
-include "Praline/vendor/GLFW"
-include "Praline/vendor/Glad"
-include "Praline/vendor/ImGui"
+group "Dependencies"
+    include "Praline/vendor/GLFW"
+    include "Praline/vendor/Glad"
+    include "Praline/vendor/ImGui"
+group ""
 
 project "Praline"
     location "Praline"
@@ -70,7 +72,7 @@ project "Praline"
 
         postbuildcommands
         {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
         }
 
     filter "configurations:Debug"
