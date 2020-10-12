@@ -31,7 +31,8 @@ namespace Praline
 		struct WindowData
 		{
 			std::string Title;
-			unsigned int Width, Height = 0;
+			unsigned int Width = 0;
+			unsigned int Height = 0;
 			bool VSync = false;
 
 			EventCallbackFunction EventCallback;
