@@ -16,17 +16,9 @@
 
 namespace Praline
 {
-	static GLFWwindow* g_Window = NULL;    // Main window
-
-	// Chain GLFW callbacks for main viewport: our callbacks will call the user's previously installed callbacks, if any.
-	static GLFWmousebuttonfun g_PrevUserCallbackMousebutton = nullptr;
-	static GLFWscrollfun g_PrevUserCallbackScroll = nullptr;
-	static GLFWkeyfun g_PrevUserCallbackKey = nullptr;
-
-	ImGuiLayer::ImGuiLayer(GLFWwindow* window)
+	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{
-		g_Window = window;
 	}
 
 	ImGuiLayer::~ImGuiLayer()

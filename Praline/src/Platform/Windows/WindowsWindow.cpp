@@ -180,8 +180,4 @@ namespace Praline
 		return m_Data.VSync;
 	}
 
-	GLFWwindow* WindowsWindow::GetGLFWWindow()
-	{
-		return m_Window;
-	}
 }

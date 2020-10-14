@@ -21,7 +21,7 @@ namespace Praline
 	class ImGuiLayer : public Layer
 	{
 	public:
-		PRALINE_API ImGuiLayer(GLFWwindow* window);
+		PRALINE_API ImGuiLayer();
 		PRALINE_API ~ImGuiLayer();
 
 		PRALINE_API void OnAttach();

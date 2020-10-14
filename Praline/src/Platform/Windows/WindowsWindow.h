@@ -17,11 +17,11 @@ namespace Praline
 		inline unsigned int GetHeight() const override { return m_Data.Height; }
 
 
-		inline void SetEventCallback(const EventCallbackFunction& callback) override { m_Data.EventCallback = callback; }
+		inline virtual void SetEventCallback(const EventCallbackFunction& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-		GLFWwindow* GetGLFWWindow() override;
+		inline virtual void* GetNativeWindow() override { return m_Window; };
 
 	private:
 		virtual void Init(const WindowProperties& properties);
