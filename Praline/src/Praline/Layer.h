@@ -8,15 +8,16 @@ namespace Praline
 	class Layer
 	{
 	public:
-		PRALINE_API Layer(const std::string& name = "Layer");
-		PRALINE_API virtual ~Layer();
+		Layer(const std::string& name = "Layer");
+		virtual ~Layer();
 
-		PRALINE_API virtual void OnAttach() {}
-		PRALINE_API virtual void OnDetach() {}
-		PRALINE_API virtual void OnUpdate() {}
-		PRALINE_API virtual void OnEvent(Event& event) {}
+		virtual void OnAttach() {}
+		virtual void OnDetach() {}
+		virtual void OnUpdate() {}
+		virtual void OnEvent(Event& event) {}
+		virtual void OnImGuiRender() {};
 
-		PRALINE_API inline const std::string& GetName() const { return m_DebugName; }
+		inline const std::string& GetName() const { return m_DebugName; }
 
 	protected:
 		std::string m_DebugName;

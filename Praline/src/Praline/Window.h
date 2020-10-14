@@ -5,8 +5,6 @@
 #include "Praline/Core.h"
 #include "Praline/Events/Event.h"
 
-struct GLFWwindow;
-
 namespace Praline
 {
 	struct WindowProperties
@@ -22,7 +20,7 @@ namespace Praline
 	};
 
 	// Interface for Desktop Window
-	class PRALINE_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFunction = std::function<void(Event&)>;

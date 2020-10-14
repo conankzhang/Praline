@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "Layer.h"
 #include "Input.h"
+#include "ImGui/ImGuiLayer.h"
 
 #include <glad/glad.h>
 
@@ -19,6 +20,9 @@ namespace Praline
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FUNCTION(Application::OnEvent));
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application()
@@ -66,6 +70,13 @@ namespace Praline
 			{
 				layer->OnUpdate();
 			}
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+			{
+				layer->OnImGuiRender();
+			}
+			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		};

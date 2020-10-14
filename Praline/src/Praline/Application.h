@@ -6,30 +6,35 @@
 #include "Praline/LayerStack.h"
 #include "Events/ApplicationEvent.h"
 
-class Layer;
+namespace Praline
+{
+	class Layer;
+	class ImGuiLayer;
+}
 
 namespace Praline
 {
 	class Application
 	{
 	public:
-		PRALINE_API Application();
-		PRALINE_API virtual ~Application();
+		Application();
+		virtual ~Application();
 
-		PRALINE_API void Run();
+		void Run();
 
-		PRALINE_API void OnEvent(Event& e);
+		void OnEvent(Event& e);
 
-		PRALINE_API void PushLayer(Layer* layer);
-		PRALINE_API void PushOverlay(Layer* overlay);
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
 
-		PRALINE_API inline static Application& Get() { return *s_Instance; }
-		PRALINE_API inline Window& GetWindow() { return *m_Window; }
+		inline static Application& Get() { return *s_Instance; }
+		inline Window& GetWindow() { return *m_Window; }
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

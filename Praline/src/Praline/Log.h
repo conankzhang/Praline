@@ -9,10 +9,10 @@ namespace Praline
 	class Log
 	{
 	public:
-		PRALINE_API static void Init();
+		static void Init();
 
-		PRALINE_API inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
-		PRALINE_API inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
 
 	private:
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;

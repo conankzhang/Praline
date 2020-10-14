@@ -26,7 +26,6 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushLayer(new Praline::ImGuiLayer());
 	}
 
 	~Sandbox()
