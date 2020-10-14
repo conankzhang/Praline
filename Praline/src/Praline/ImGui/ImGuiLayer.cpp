@@ -10,6 +10,8 @@
 #include "Praline/Events/KeyEvent.h"
 #include "Praline/Events/ApplicationEvent.h"
 
+#include "Praline/KeyCodes.h"
+
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
@@ -35,28 +37,28 @@ namespace Praline
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-		io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-		io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-		io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-		io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-		io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-		io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-		io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-		io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-		io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-		io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-		io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-		io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-		io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-		io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-		io.KeyMap[ImGuiKey_KeyPadEnter] = GLFW_KEY_KP_ENTER;
-		io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-		io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-		io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-		io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+		io.KeyMap[ImGuiKey_Tab] = PRALINE_KEY_TAB;
+		io.KeyMap[ImGuiKey_LeftArrow] = PRALINE_KEY_LEFT;
+		io.KeyMap[ImGuiKey_RightArrow] = PRALINE_KEY_RIGHT;
+		io.KeyMap[ImGuiKey_UpArrow] = PRALINE_KEY_UP;
+		io.KeyMap[ImGuiKey_DownArrow] = PRALINE_KEY_DOWN;
+		io.KeyMap[ImGuiKey_PageUp] = PRALINE_KEY_PAGE_UP;
+		io.KeyMap[ImGuiKey_PageDown] = PRALINE_KEY_PAGE_DOWN;
+		io.KeyMap[ImGuiKey_Home] = PRALINE_KEY_HOME;
+		io.KeyMap[ImGuiKey_End] = PRALINE_KEY_END;
+		io.KeyMap[ImGuiKey_Insert] = PRALINE_KEY_INSERT;
+		io.KeyMap[ImGuiKey_Delete] = PRALINE_KEY_DELETE;
+		io.KeyMap[ImGuiKey_Backspace] = PRALINE_KEY_BACKSPACE;
+		io.KeyMap[ImGuiKey_Space] = PRALINE_KEY_SPACE;
+		io.KeyMap[ImGuiKey_Enter] = PRALINE_KEY_ENTER;
+		io.KeyMap[ImGuiKey_Escape] = PRALINE_KEY_ESCAPE;
+		io.KeyMap[ImGuiKey_KeyPadEnter] = PRALINE_KEY_KP_ENTER;
+		io.KeyMap[ImGuiKey_A] = PRALINE_KEY_A;
+		io.KeyMap[ImGuiKey_C] = PRALINE_KEY_C;
+		io.KeyMap[ImGuiKey_V] = PRALINE_KEY_V;
+		io.KeyMap[ImGuiKey_X] = PRALINE_KEY_X;
+		io.KeyMap[ImGuiKey_Y] = PRALINE_KEY_Y;
+		io.KeyMap[ImGuiKey_Z] = PRALINE_KEY_Z;
 
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
@@ -141,10 +143,10 @@ namespace Praline
 		io.KeysDown[e.GetKeyCode()] = true;
 
 		// Modifiers are not reliable across systems
-		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+		io.KeyCtrl = io.KeysDown[PRALINE_KEY_LEFT_CONTROL] || io.KeysDown[PRALINE_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[PRALINE_KEY_LEFT_SHIFT] || io.KeysDown[PRALINE_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[PRALINE_KEY_LEFT_ALT] || io.KeysDown[PRALINE_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[PRALINE_KEY_LEFT_SUPER] || io.KeysDown[PRALINE_KEY_RIGHT_SUPER];
 
 		return false;
 	}
@@ -155,10 +157,10 @@ namespace Praline
 		io.KeysDown[e.GetKeyCode()] = false;
 
 		// Modifiers are not reliable across systems
-		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+		io.KeyCtrl = io.KeysDown[PRALINE_KEY_LEFT_CONTROL] || io.KeysDown[PRALINE_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[PRALINE_KEY_LEFT_SHIFT] || io.KeysDown[PRALINE_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[PRALINE_KEY_LEFT_ALT] || io.KeysDown[PRALINE_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[PRALINE_KEY_LEFT_SUPER] || io.KeysDown[PRALINE_KEY_RIGHT_SUPER];
 
 		return true;
 	}
