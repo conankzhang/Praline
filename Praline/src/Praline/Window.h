@@ -5,6 +5,8 @@
 #include "Praline/Core.h"
 #include "Praline/Events/Event.h"
 
+struct GLFWwindow;
+
 namespace Praline
 {
 	struct WindowProperties
@@ -35,6 +37,8 @@ namespace Praline
 		virtual void SetEventCallback(const EventCallbackFunction& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
+
+		virtual GLFWwindow* GetGLFWWindow() = 0;
 
 		static Window* Create(const WindowProperties& properties = WindowProperties());
 	};

@@ -21,6 +21,8 @@ namespace Praline
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
+		GLFWwindow* GetGLFWWindow() override;
+
 	private:
 		virtual void Init(const WindowProperties& properties);
 		virtual void Shutdown();

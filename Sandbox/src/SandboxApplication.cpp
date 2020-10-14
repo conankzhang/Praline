@@ -26,7 +26,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushLayer(new Praline::ImGuiLayer());
+		PushLayer(new Praline::ImGuiLayer(GetWindow().GetGLFWWindow()));
 	}
 
 	~Sandbox()
