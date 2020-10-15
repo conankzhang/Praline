@@ -10,6 +10,7 @@ namespace Praline
 {
 	class Layer;
 	class ImGuiLayer;
+	class Shader;
 }
 
 namespace Praline
@@ -42,6 +43,7 @@ namespace Praline
 		unsigned int m_IndexArray;
 		unsigned int m_VertexBuffer;
 		unsigned int m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};
