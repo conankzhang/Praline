@@ -5,6 +5,11 @@
 
 namespace Praline
 {
+	class GraphicsContext;
+}
+
+namespace Praline
+{
 	class WindowsWindow : public Window
 	{
 	public:
@@ -29,6 +34,7 @@ namespace Praline
 
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

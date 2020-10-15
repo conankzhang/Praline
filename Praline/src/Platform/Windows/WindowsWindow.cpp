@@ -1,10 +1,11 @@
 #include "PralinePCH.h"
 #include "WindowsWindow.h"
+
 #include "Praline/Events/ApplicationEvent.h"
 #include "Praline/Events/MouseEvent.h"
 #include "Praline/Events/KeyEvent.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Praline
 {
@@ -42,6 +43,7 @@ namespace Praline
 		{
 			int success = glfwInit();
 			PRALINE_CORE_ASSERT(success, "Could not initialize GLFW!")
+#include "Praline/Renderer/GraphicsContext.h"
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 
@@ -50,9 +52,10 @@ namespace Praline
 		}
 
 		m_Window = glfwCreateWindow((int)properties.Width, (int)properties.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		PRALINE_CORE_ASSERT(status, "Failed to initialize Glad!")
+
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -157,7 +160,7 @@ namespace Praline
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
