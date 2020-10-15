@@ -11,12 +11,12 @@ public:
 
 	void OnUpdate() override
 	{
-		PRALINE_INFO("ExampleLayer::Update");
+
 	}
 
 	void OnEvent(Praline::Event& event) override
 	{
-		PRALINE_TRACE("{0}", event);
+
 	}
 };
 
