@@ -10,8 +10,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
-
-#include <glad/glad.h>
+#include "Renderer/Renderer.h"
 
 namespace Praline
 {
@@ -173,16 +172,18 @@ namespace Praline
 	{
 		while (m_Running)
 		{
-			glClearColor(0.004f, 0.086f, 0.153f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::SetClearColor({ 0.004f, 0.086f, 0.153f, 1 });
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
 
 			m_ShaderBlue->Bind();
-			m_SquareVertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_SquareVertexArray);
 
 			m_Shader->Bind();
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);;
+			Renderer::Submit(m_VertexArray);
+
+			Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 			{
