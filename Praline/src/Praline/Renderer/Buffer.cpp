@@ -11,14 +11,10 @@ namespace Praline
 		switch(Renderer::GetAPI())
 		{
 		case RendererAPI::None:
-		{
 			PRALINE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
-		}
 		case RendererAPI::OpenGL:
-		{
 			return new OpenGLVertexBuffer(vertices, size);
-		}
 		}
 
 		PRALINE_CORE_ASSERT(false, "Unkown RendererAPI!");
@@ -30,14 +26,10 @@ namespace Praline
 		switch(Renderer::GetAPI())
 		{
 		case RendererAPI::None:
-		{
 			PRALINE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
-		}
 		case RendererAPI::OpenGL:
-		{
 			return new OpenGLIndexBuffer(vertices, count);
-		}
 		}
 
 		PRALINE_CORE_ASSERT(false, "Unkown RendererAPI!");

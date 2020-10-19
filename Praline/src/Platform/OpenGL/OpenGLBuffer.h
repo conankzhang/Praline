@@ -8,7 +8,7 @@ namespace Praline
 	{
 	public:
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
-		virtual ~OpenGLVertexBuffer();
+		virtual ~OpenGLVertexBuffer() override;
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
