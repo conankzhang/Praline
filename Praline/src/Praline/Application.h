@@ -11,6 +11,7 @@ namespace Praline
 	class Layer;
 	class ImGuiLayer;
 	class Shader;
+	class VertexArray;
 	class VertexBuffer;
 	class IndexBuffer;
 }
@@ -41,12 +42,12 @@ namespace Praline
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		unsigned int m_VertexArray;
-		unsigned int m_IndexArray;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_VertexArray;
 
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<Shader> m_ShaderBlue;
+		std::shared_ptr<VertexArray> m_SquareVertexArray;
+
 	private:
 		static Application* s_Instance;
 	};

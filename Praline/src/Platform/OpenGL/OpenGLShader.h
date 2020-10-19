@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Praline/Renderer/Shader.h"
+#include "Praline/Renderer/Buffer.h"
 
 namespace Praline
 {
