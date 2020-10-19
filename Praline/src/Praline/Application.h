@@ -42,12 +42,6 @@ namespace Praline
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_ShaderBlue;
-		std::shared_ptr<VertexArray> m_SquareVertexArray;
-
 	private:
 		static Application* s_Instance;
 	};
