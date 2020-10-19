@@ -42,8 +42,7 @@ namespace Praline
 		if (!s_GLFWInitialized)
 		{
 			int success = glfwInit();
-			PRALINE_CORE_ASSERT(success, "Could not initialize GLFW!")
-#include "Praline/Renderer/GraphicsContext.h"
+			PRALINE_CORE_ASSERT(success, "Could not initialize GLFW!");
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 
