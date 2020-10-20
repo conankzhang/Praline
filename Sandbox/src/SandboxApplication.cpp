@@ -116,13 +116,15 @@ public:
 
 			in vec3 v_Position;
 
+			uniform vec4 u_Color;
+
 			void main()
 			{
-				color = vec4(0.2, 0.3, 0.8, 1.0);
+				color = u_Color;
 			}
 		)";
 
-		m_ShaderBlue.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
+		m_FlatColor_Shader.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
 
 	}
 
@@ -135,6 +137,9 @@ public:
 
 		Praline::Renderer::BeginScene(m_Camera);
 
+		const glm::vec4 red(0.8f, 0.2f, 0.3f, 1.0f);
+		const glm::vec4 blue(0.2f, 0.3f, 0.8f, 1.0f);
+
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f));
 		for (int y = 0; y < 20; y++)
 		{
@@ -143,7 +148,16 @@ public:
 				const glm::vec3 position(x * 0.1f, y * 0.1f, 0.0f);
 				const glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * scale;
 
-				Praline::Renderer::Submit(m_ShaderBlue, m_SquareVertexArray, transform);
+				if (x % 2 == 0)
+				{
+					m_FlatColor_Shader->UploadUniformFloat4("u_Color", red);
+				}
+				else
+				{
+					m_FlatColor_Shader->UploadUniformFloat4("u_Color", blue);
+				}
+
+				Praline::Renderer::Submit(m_FlatColor_Shader, m_SquareVertexArray, transform);
 			}
 		}
 
@@ -198,7 +212,7 @@ private:
 	std::shared_ptr<Praline::Shader> m_Shader;
 	std::shared_ptr<Praline::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Praline::Shader> m_ShaderBlue;
+	std::shared_ptr<Praline::Shader> m_FlatColor_Shader;
 	std::shared_ptr<Praline::VertexArray> m_SquareVertexArray;
 
 	Praline::OrthographicCamera m_Camera;
