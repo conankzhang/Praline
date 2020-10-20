@@ -140,6 +140,44 @@ public:
 		Renderer::Submit(m_Shader, m_VertexArray);
 
 		Renderer::EndScene();
+
+		OnInput();
+	}
+
+	void OnInput()
+	{
+		const float k_cameraSpeed = 0.1f;
+		if (Praline::Input::IsKeyPressed(PRALINE_KEY_W))
+		{
+			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
+			currentCameraPosition.y += k_cameraSpeed;
+
+			m_Camera.SetPosition(currentCameraPosition);
+		}
+
+		if (Praline::Input::IsKeyPressed(PRALINE_KEY_A))
+		{
+			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
+			currentCameraPosition.x -= k_cameraSpeed;
+
+			m_Camera.SetPosition(currentCameraPosition);
+		}
+
+		if (Praline::Input::IsKeyPressed(PRALINE_KEY_S))
+		{
+			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
+			currentCameraPosition.y -= k_cameraSpeed;
+
+			m_Camera.SetPosition(currentCameraPosition);
+		}
+
+		if (Praline::Input::IsKeyPressed(PRALINE_KEY_D))
+		{
+			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
+			currentCameraPosition.x += k_cameraSpeed;
+
+			m_Camera.SetPosition(currentCameraPosition);
+		}
 	}
 
 	void OnEvent(Praline::Event& event) override
