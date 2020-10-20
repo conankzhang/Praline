@@ -2,6 +2,7 @@
 
 #include "Praline/Core.h"
 #include "Praline/Events/Event.h"
+#include "Praline/Core/TimeStep.h"
 
 namespace Praline
 {
@@ -13,7 +14,7 @@ namespace Praline
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep timestep) {}
 		virtual void OnEvent(Event& event) {}
 		virtual void OnImGuiRender() {};
 

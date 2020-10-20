@@ -121,26 +121,24 @@ public:
 		m_ShaderBlue.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
 	}
 
-	void OnUpdate() override
+	void OnUpdate(Praline::Timestep timestep) override
 	{
-		using namespace Praline;
+		UpdateCamera(timestep);
 
-		RenderCommand::SetClearColor({ 0.004f, 0.086f, 0.153f, 1 });
-		RenderCommand::Clear();
+		Praline::RenderCommand::SetClearColor({ 0.004f, 0.086f, 0.153f, 1 });
+		Praline::RenderCommand::Clear();
 
-		Renderer::BeginScene(m_Camera);
+		Praline::Renderer::BeginScene(m_Camera);
 
-		Renderer::Submit(m_ShaderBlue, m_SquareVertexArray);
-		Renderer::Submit(m_Shader, m_VertexArray);
+		Praline::Renderer::Submit(m_ShaderBlue, m_SquareVertexArray);
+		Praline::Renderer::Submit(m_Shader, m_VertexArray);
 
-		Renderer::EndScene();
-
-		UpdateCamera();
+		Praline::Renderer::EndScene();
 	}
 
-	void UpdateCamera()
+	void UpdateCamera(Praline::Timestep timestep)
 	{
-		const float k_cameraMovementSpeed = 0.1f;
+		const float k_cameraMovementSpeed = 5.0f * timestep;
 		glm::vec3 currentCameraPosition = m_Camera.GetPosition();
 
 		if (Praline::Input::IsKeyPressed(PRALINE_KEY_W))
@@ -161,7 +159,7 @@ public:
 			currentCameraPosition.x += k_cameraMovementSpeed;
 		}
 
-		const float k_cameraRotationSpeed = 2.0f;
+		const float k_cameraRotationSpeed = 180.0f * timestep;
 		float currentCameraRotation = m_Camera.GetRotation();
 		if (Praline::Input::IsKeyPressed(PRALINE_KEY_Q))
 		{

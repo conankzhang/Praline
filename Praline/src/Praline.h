@@ -6,6 +6,8 @@
 #include "Praline/Layer.h"
 #include "Praline/Log.h"
 
+#include "Praline/Core/TimeStep.h"
+
 #include "Praline/Input.h"
 #include "Praline/KeyCodes.h"
 #include "Praline/MouseButtonCodes.h"

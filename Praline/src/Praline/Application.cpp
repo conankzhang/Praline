@@ -6,6 +6,9 @@
 #include "Layer.h"
 #include "Input.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Core/TimeStep.h"
+
+#include <glfw/glfw3.h>
 
 namespace Praline
 {
@@ -59,9 +62,13 @@ namespace Praline
 	{
 		while (m_Running)
 		{
+			const float time = (float)glfwGetTime();
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
 			for (Layer* layer : m_LayerStack)
 			{
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 			}
 
 			m_ImGuiLayer->Begin();
