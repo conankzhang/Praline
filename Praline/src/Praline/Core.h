@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef PRALINE_DEBUG
 	#define PRALINE_ENABLE_ASSERTS
 #endif
@@ -16,3 +18,11 @@
 
 #define BIND_EVENT_FUNCTION(x) std::bind(&x, this, std::placeholders::_1)
 
+namespace Praline
+{
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}
