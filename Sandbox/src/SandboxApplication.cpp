@@ -1,12 +1,16 @@
 #include <Praline.h>
 
+#include "Platform/OpenGL/OpenGLShader.h"
+#include <ImGui/imgui.h>
+
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Praline::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_SquarePosition(0.0f)
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
 		m_VertexArray.reset(Praline::VertexArray::Create());
 
@@ -116,15 +120,15 @@ public:
 
 			in vec3 v_Position;
 
-			uniform vec4 u_Color;
+			uniform vec3 u_Color;
 
 			void main()
 			{
-				color = u_Color;
+				color = vec4(u_Color, 1.0);
 			}
 		)";
 
-		m_FlatColor_Shader.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
+		m_FlatColorShader.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
 
 	}
 
@@ -137,8 +141,8 @@ public:
 
 		Praline::Renderer::BeginScene(m_Camera);
 
-		const glm::vec4 red(0.8f, 0.2f, 0.3f, 1.0f);
-		const glm::vec4 blue(0.2f, 0.3f, 0.8f, 1.0f);
+		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_FlatColorShader)->Bind();
+		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f));
 		for (int y = 0; y < 20; y++)
@@ -147,17 +151,7 @@ public:
 			{
 				const glm::vec3 position(x * 0.1f, y * 0.1f, 0.0f);
 				const glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * scale;
-
-				if (x % 2 == 0)
-				{
-					m_FlatColor_Shader->UploadUniformFloat4("u_Color", red);
-				}
-				else
-				{
-					m_FlatColor_Shader->UploadUniformFloat4("u_Color", blue);
-				}
-
-				Praline::Renderer::Submit(m_FlatColor_Shader, m_SquareVertexArray, transform);
+				Praline::Renderer::Submit(m_FlatColorShader, m_SquareVertexArray, transform);
 			}
 		}
 
@@ -204,6 +198,13 @@ public:
 		m_Camera.SetRotation(currentCameraRotation);
 	}
 
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+		ImGui::End();
+	}
+
 	void OnEvent(Praline::Event& event) override
 	{
 
@@ -212,11 +213,11 @@ private:
 	std::shared_ptr<Praline::Shader> m_Shader;
 	std::shared_ptr<Praline::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Praline::Shader> m_FlatColor_Shader;
+	std::shared_ptr<Praline::Shader> m_FlatColorShader;
 	std::shared_ptr<Praline::VertexArray> m_SquareVertexArray;
 
 	Praline::OrthographicCamera m_Camera;
-	glm::vec3 m_SquarePosition;
+	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 };
 
 class Sandbox : public Praline::Application
