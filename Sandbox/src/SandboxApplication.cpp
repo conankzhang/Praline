@@ -1,18 +1,12 @@
 #include <Praline.h>
 
-#include <Praline/Renderer/Renderer.h>
-#include <Praline/Renderer/Shader.h>
-#include <Praline/Renderer/OrthographicCamera.h>
-
 class ExampleLayer : public Praline::Layer
 {
 public:
 	ExampleLayer()
 		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
-		using namespace Praline;
-
-		m_VertexArray.reset(VertexArray::Create());
+		m_VertexArray.reset(Praline::VertexArray::Create());
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -20,23 +14,23 @@ public:
 			0.f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		std::shared_ptr<VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		std::shared_ptr<Praline::VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(Praline::VertexBuffer::Create(vertices, sizeof(vertices)));
 
-		BufferLayout layout = {
-			{ShaderDataType::Float3, "a_Position" },
-			{ShaderDataType::Float4, "a_Color" }
+		Praline::BufferLayout layout = {
+			{Praline::ShaderDataType::Float3, "a_Position" },
+			{Praline::ShaderDataType::Float4, "a_Color" }
 		};
 		vertexBuffer->SetLayout(layout);
 
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<IndexBuffer> indexBuffer;
-		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		std::shared_ptr<Praline::IndexBuffer> indexBuffer;
+		indexBuffer.reset(Praline::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_SquareVertexArray.reset(VertexArray::Create());
+		m_SquareVertexArray.reset(Praline::VertexArray::Create());
 		float squareVertices[3 * 4] = {
 			-0.75f, -0.75f, 0.0f,
 			0.75f, -0.75f, 0.0f,
@@ -44,18 +38,18 @@ public:
 			-0.75f, 0.75f, 0.0f
 		};
 
-		std::shared_ptr<VertexBuffer> squareVertexBuffer;
-		squareVertexBuffer.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		std::shared_ptr <Praline::VertexBuffer > squareVertexBuffer;
+		squareVertexBuffer.reset(Praline::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 
 		squareVertexBuffer->SetLayout(
 			{
-				{ShaderDataType::Float3, "a_Position" }
+				{Praline::ShaderDataType::Float3, "a_Position" }
 			});
 		m_SquareVertexArray->AddVertexBuffer(squareVertexBuffer);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<IndexBuffer> squareIndexBuffer;
-		squareIndexBuffer.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		std::shared_ptr<Praline::IndexBuffer> squareIndexBuffer;
+		squareIndexBuffer.reset(Praline::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVertexArray->SetIndexBuffer(squareIndexBuffer);
 
 		std::string vertexSource = R"(
@@ -92,7 +86,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(Shader::Create(vertexSource, fragmentSource));
+		m_Shader.reset(Praline::Shader::Create(vertexSource, fragmentSource));
 
 		std::string vertexSourceSquare = R"(
 			#version 330 core
@@ -124,7 +118,7 @@ public:
 			}
 		)";
 
-		m_ShaderBlue.reset(Shader::Create(vertexSourceSquare, fragmentSourceSquare));
+		m_ShaderBlue.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
 	}
 
 	void OnUpdate() override
@@ -141,43 +135,45 @@ public:
 
 		Renderer::EndScene();
 
-		OnInput();
+		UpdateCamera();
 	}
 
-	void OnInput()
+	void UpdateCamera()
 	{
-		const float k_cameraSpeed = 0.1f;
+		const float k_cameraMovementSpeed = 0.1f;
+		glm::vec3 currentCameraPosition = m_Camera.GetPosition();
+
 		if (Praline::Input::IsKeyPressed(PRALINE_KEY_W))
 		{
-			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
-			currentCameraPosition.y += k_cameraSpeed;
-
-			m_Camera.SetPosition(currentCameraPosition);
+			currentCameraPosition.y += k_cameraMovementSpeed;
+		}
+		else if (Praline::Input::IsKeyPressed(PRALINE_KEY_S))
+		{
+			currentCameraPosition.y -= k_cameraMovementSpeed;
 		}
 
 		if (Praline::Input::IsKeyPressed(PRALINE_KEY_A))
 		{
-			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
-			currentCameraPosition.x -= k_cameraSpeed;
-
-			m_Camera.SetPosition(currentCameraPosition);
+			currentCameraPosition.x -= k_cameraMovementSpeed;
 		}
-
-		if (Praline::Input::IsKeyPressed(PRALINE_KEY_S))
+		else if (Praline::Input::IsKeyPressed(PRALINE_KEY_D))
 		{
-			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
-			currentCameraPosition.y -= k_cameraSpeed;
-
-			m_Camera.SetPosition(currentCameraPosition);
+			currentCameraPosition.x += k_cameraMovementSpeed;
 		}
 
-		if (Praline::Input::IsKeyPressed(PRALINE_KEY_D))
+		const float k_cameraRotationSpeed = 2.0f;
+		float currentCameraRotation = m_Camera.GetRotation();
+		if (Praline::Input::IsKeyPressed(PRALINE_KEY_Q))
 		{
-			glm::vec3 currentCameraPosition = m_Camera.GetPosition();
-			currentCameraPosition.x += k_cameraSpeed;
-
-			m_Camera.SetPosition(currentCameraPosition);
+			currentCameraRotation -= k_cameraRotationSpeed;
 		}
+		else if (Praline::Input::IsKeyPressed(PRALINE_KEY_E))
+		{
+			currentCameraRotation += k_cameraRotationSpeed;
+		}
+
+		m_Camera.SetPosition(currentCameraPosition);
+		m_Camera.SetRotation(currentCameraRotation);
 	}
 
 	void OnEvent(Praline::Event& event) override
