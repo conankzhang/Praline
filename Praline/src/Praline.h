@@ -20,6 +20,7 @@
 
 #include <Praline/Renderer/Buffer.h>
 #include <Praline/Renderer/Shader.h>
+#include <Praline/Renderer/Texture.h>
 #include <Praline/Renderer/VertexArray.h>
 
 #include <Praline/Renderer/OrthographicCamera.h>

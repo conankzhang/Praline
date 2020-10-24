@@ -18,6 +18,7 @@ IncludeDir["GLFW"] = "Praline/vendor/GLFW/include"
 IncludeDir["Glad"] = "Praline/vendor/GLAD/include"
 IncludeDir["ImGui"] = "Praline/vendor/ImGui"
 IncludeDir["glm"] = "Praline/vendor/glm"
+IncludeDir["stb_image"] = "Praline/vendor/stb_image"
 
 group "Dependencies"
     include "Praline/vendor/GLFW"
@@ -41,7 +42,11 @@ project "Praline"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/stb_image/**.h",
+        "%{prj.name}/vendor/stb_image/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     defines
@@ -56,7 +61,8 @@ project "Praline"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.stb_image}"
     }
 
     links

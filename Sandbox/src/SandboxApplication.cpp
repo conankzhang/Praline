@@ -12,7 +12,7 @@ public:
 	ExampleLayer()
 		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
-		m_VertexArray.reset(Praline::VertexArray::Create());
+		m_VertexArray = Praline::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -36,12 +36,12 @@ public:
 		indexBuffer.reset(Praline::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_SquareVertexArray.reset(Praline::VertexArray::Create());
-		float squareVertices[3 * 4] = {
-			-0.75f, -0.75f, 0.0f,
-			0.75f, -0.75f, 0.0f,
-			0.75f, 0.75f, 0.0f,
-			-0.75f, 0.75f, 0.0f
+		m_SquareVertexArray = Praline::VertexArray::Create();
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		std::shared_ptr <Praline::VertexBuffer > squareVertexBuffer;
@@ -49,7 +49,8 @@ public:
 
 		squareVertexBuffer->SetLayout(
 			{
-				{Praline::ShaderDataType::Float3, "a_Position" }
+				{Praline::ShaderDataType::Float3, "a_Position" },
+				{Praline::ShaderDataType::Float2, "a_TexCoord" }
 			});
 		m_SquareVertexArray->AddVertexBuffer(squareVertexBuffer);
 
@@ -130,6 +131,44 @@ public:
 
 		m_FlatColorShader.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
 
+		std::string vertexSourceTexture = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+
+			uniform mat4 u_ViewProjectionMatrix;
+			uniform mat4 u_Transform;
+
+			out vec2 v_TexCoord;
+
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjectionMatrix * u_Transform * vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string fragmentSourceTexture = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TexCoord;
+
+			uniform sampler2D u_Texture;
+
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		m_TextureShader.reset(Praline::Shader::Create(vertexSourceTexture, fragmentSourceTexture));
+		m_Texture = Praline::Texture2D::Create("assets/textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Praline::Timestep timestep) override
@@ -144,7 +183,7 @@ public:
 		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_FlatColorShader)->Bind();
 		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
-		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f));
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.075f));
 		for (int y = 0; y < 20; y++)
 		{
 			for (int x = 0; x < 20; x++)
@@ -155,7 +194,11 @@ public:
 			}
 		}
 
-		Praline::Renderer::Submit(m_Shader, m_VertexArray);
+		m_Texture->Bind();
+		Praline::Renderer::Submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		// Triangle
+		//Praline::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Praline::Renderer::EndScene();
 	}
@@ -210,11 +253,14 @@ public:
 
 	}
 private:
-	std::shared_ptr<Praline::Shader> m_Shader;
-	std::shared_ptr<Praline::VertexArray> m_VertexArray;
+	Praline::Ref<Praline::Shader> m_Shader;
+	Praline::Ref<Praline::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Praline::Shader> m_FlatColorShader;
-	std::shared_ptr<Praline::VertexArray> m_SquareVertexArray;
+	Praline::Ref<Praline::Shader> m_FlatColorShader;
+	Praline::Ref<Praline::VertexArray> m_SquareVertexArray;
+
+	Praline::Ref<Praline::Shader> m_TextureShader;
+	Praline::Ref<Praline::Texture> m_Texture;
 
 	Praline::OrthographicCamera m_Camera;
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
