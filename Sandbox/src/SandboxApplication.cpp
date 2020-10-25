@@ -166,6 +166,7 @@ public:
 
 		m_TextureShader.reset(Praline::Shader::Create(vertexSourceTexture, fragmentSourceTexture));
 		m_Texture = Praline::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_TextureCZ = Praline::Texture2D::Create("assets/textures/CZ.png");
 
 		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -183,7 +184,7 @@ public:
 		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_FlatColorShader)->Bind();
 		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
-		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.075f));
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.08f));
 		for (int y = 0; y < 20; y++)
 		{
 			for (int x = 0; x < 20; x++)
@@ -195,6 +196,9 @@ public:
 		}
 
 		m_Texture->Bind();
+		Praline::Renderer::Submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		m_TextureCZ->Bind();
 		Praline::Renderer::Submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		// Triangle
@@ -261,6 +265,8 @@ private:
 
 	Praline::Ref<Praline::Shader> m_TextureShader;
 	Praline::Ref<Praline::Texture> m_Texture;
+
+	Praline::Ref<Praline::Texture> m_TextureCZ;
 
 	Praline::OrthographicCamera m_Camera;
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };

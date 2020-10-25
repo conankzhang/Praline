@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "Layer.h"
 #include "Input.h"
+#include "Renderer/Renderer.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Core/TimeStep.h"
 
@@ -21,6 +22,8 @@ namespace Praline
 
 		m_Window = Scope<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FUNCTION(Application::OnEvent));
+
+		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
