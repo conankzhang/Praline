@@ -6,7 +6,7 @@
 
 namespace Praline
 {
-	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch(Renderer::GetAPI())
 		{
@@ -14,14 +14,14 @@ namespace Praline
 			PRALINE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return new OpenGLVertexBuffer(vertices, size);
+			return std::make_shared<OpenGLVertexBuffer>(vertices, size);
 		}
 
 		PRALINE_CORE_ASSERT(false, "Unkown RendererAPI!");
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(uint32_t* vertices, uint32_t count)
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* vertices, uint32_t count)
 	{
 		switch(Renderer::GetAPI())
 		{
@@ -29,7 +29,7 @@ namespace Praline
 			PRALINE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return new OpenGLIndexBuffer(vertices, count);
+			return std::make_shared<OpenGLIndexBuffer>(vertices, count);
 		}
 
 		PRALINE_CORE_ASSERT(false, "Unkown RendererAPI!");

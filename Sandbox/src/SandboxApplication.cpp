@@ -21,7 +21,7 @@ public:
 		};
 
 		std::shared_ptr<Praline::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Praline::VertexBuffer::Create(vertices, sizeof(vertices)));
+		vertexBuffer = Praline::VertexBuffer::Create(vertices, sizeof(vertices));
 
 		Praline::BufferLayout layout = {
 			{Praline::ShaderDataType::Float3, "a_Position" },
@@ -33,7 +33,7 @@ public:
 
 		uint32_t indices[3] = { 0, 1, 2 };
 		std::shared_ptr<Praline::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Praline::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		indexBuffer = Praline::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		m_SquareVertexArray = Praline::VertexArray::Create();
@@ -45,7 +45,7 @@ public:
 		};
 
 		std::shared_ptr <Praline::VertexBuffer > squareVertexBuffer;
-		squareVertexBuffer.reset(Praline::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVertexBuffer = Praline::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 
 		squareVertexBuffer->SetLayout(
 			{
@@ -56,7 +56,7 @@ public:
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		std::shared_ptr<Praline::IndexBuffer> squareIndexBuffer;
-		squareIndexBuffer.reset(Praline::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareIndexBuffer = Praline::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVertexArray->SetIndexBuffer(squareIndexBuffer);
 
 		std::string vertexSource = R"(
@@ -94,7 +94,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(Praline::Shader::Create(vertexSource, fragmentSource));
+		m_Shader = Praline::Shader::Create(vertexSource, fragmentSource);
 
 		std::string vertexSourceSquare = R"(
 			#version 330 core
@@ -129,42 +129,10 @@ public:
 			}
 		)";
 
-		m_FlatColorShader.reset(Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare));
+		m_FlatColorShader = Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare);
 
-		std::string vertexSourceTexture = R"(
-			#version 330 core
+		m_TextureShader = Praline::Shader::Create("assets/shaders/Texture.glsl");
 
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-
-			uniform mat4 u_ViewProjectionMatrix;
-			uniform mat4 u_Transform;
-
-			out vec2 v_TexCoord;
-
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjectionMatrix * u_Transform * vec4(a_Position, 1.0);
-			}
-		)";
-
-		std::string fragmentSourceTexture = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec2 v_TexCoord;
-
-			uniform sampler2D u_Texture;
-
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		m_TextureShader.reset(Praline::Shader::Create(vertexSourceTexture, fragmentSourceTexture));
 		m_Texture = Praline::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_TextureCZ = Praline::Texture2D::Create("assets/textures/CZ.png");
 
