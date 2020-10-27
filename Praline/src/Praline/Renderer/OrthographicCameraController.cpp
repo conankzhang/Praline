@@ -1,8 +1,8 @@
 #include "PralinePCH.h"
 #include "OrthographicCameraController.h"
 
-#include "Praline/Input.h"
-#include "Praline/KeyCodes.h"
+#include "Praline/Core/Input.h"
+#include "Praline/Core/KeyCodes.h"
 
 namespace Praline
 {

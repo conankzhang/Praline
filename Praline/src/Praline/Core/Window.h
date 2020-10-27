@@ -2,7 +2,7 @@
 
 #include "PralinePCH.h"
 
-#include "Praline/Core.h"
+#include "Praline/Core/Core.h"
 #include "Praline/Events/Event.h"
 
 namespace Praline

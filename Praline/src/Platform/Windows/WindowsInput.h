@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Praline/Input.h"
+#include "Praline/Core/Input.h"
 
 namespace Praline
 {

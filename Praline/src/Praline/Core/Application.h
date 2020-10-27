@@ -3,8 +3,8 @@
 #include "Core.h"
 #include "Window.h"
 
-#include "Praline/LayerStack.h"
-#include "Events/ApplicationEvent.h"
+#include "Praline/Core/LayerStack.h"
+#include "Praline/Events/ApplicationEvent.h"
 
 namespace Praline
 {

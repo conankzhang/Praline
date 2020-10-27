@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Praline/Layer.h"
+#include "Praline/Core/Layer.h"
 
 namespace Praline
 {

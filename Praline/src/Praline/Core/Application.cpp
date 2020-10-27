@@ -1,13 +1,13 @@
 #include "PralinePCH.h"
 
 #include "Application.h"
-#include "Events/Event.h"
+#include "Praline/Events/Event.h"
 #include "Log.h"
 #include "Layer.h"
 #include "Input.h"
-#include "Renderer/Renderer.h"
-#include "ImGui/ImGuiLayer.h"
-#include "Core/TimeStep.h"
+#include "Praline/Renderer/Renderer.h"
+#include "Praline/ImGui/ImGuiLayer.h"
+#include "Praline/Core/TimeStep.h"
 
 #include <glfw/glfw3.h>
 

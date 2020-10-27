@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Praline/Window.h"
+#include "Praline/Core/Window.h"
 #include <GLFW/glfw3.h>
 
 namespace Praline

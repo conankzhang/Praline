@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Praline/Log.h"
+#include "Praline/Core/Log.h"
 
 #ifdef PRALINE_PLATFORM_WINDOWS
 	#include <Windows.h>

@@ -1,7 +1,7 @@
 #include "PralinePCH.h"
 #include "ImGuiLayer.h"
 
-#include "Praline/Application.h"
+#include "Praline/Core/Application.h"
 
 #include "imgui.h"
 #include "examples/imgui_impl_opengl3.h"

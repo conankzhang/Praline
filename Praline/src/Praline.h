@@ -2,16 +2,16 @@
 
 // For use by Praline applications
 
-#include "Praline/Application.h"
-#include "Praline/Layer.h"
-#include "Praline/Log.h"
+#include "Praline/Core/Application.h"
+#include "Praline/Core/Layer.h"
+#include "Praline/Core/Log.h"
 
 #include "Praline/Core/TimeStep.h"
 
-#include "Praline/Input.h"
-#include "Praline/KeyCodes.h"
-#include "Praline/MouseButtonCodes.h"
-#include "Praline/OrthographicCameraController.h"
+#include "Praline/Core/Input.h"
+#include "Praline/Core/KeyCodes.h"
+#include "Praline/Core/MouseButtonCodes.h"
+#include "Praline/Renderer/OrthographicCameraController.h"
 
 #include "Praline/ImGui/ImGuiLayer.h"
 
@@ -28,6 +28,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 // Entry Point---------------------------------------------------------------------------------------------------------
-#include "Praline/EntryPoint.h"
+#include "Praline/Core/EntryPoint.h"
 // --------------------------------------------------------------------------------------------------------------------
 

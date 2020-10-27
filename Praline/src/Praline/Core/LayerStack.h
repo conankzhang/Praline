@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Praline/Core.h"
+#include "Praline/Core/Core.h"
 #include "Layer.h"
 
 #include <vector>

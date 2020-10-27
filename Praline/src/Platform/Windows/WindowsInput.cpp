@@ -1,7 +1,7 @@
 #include "PralinePCH.h"
 #include "WindowsInput.h"
 
-#include "Praline/Application.h"
+#include "Praline/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Praline
