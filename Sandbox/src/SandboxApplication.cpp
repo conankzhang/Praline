@@ -1,6 +1,8 @@
 #include <Praline.h>
+#include <Praline/Core/EntryPoint.h>
 
-#include "Platform/OpenGL/OpenGLShader.h"
+#include "Sandbox2D.h"
+#include <Platform/OpenGL/OpenGLShader.h>
 #include <ImGui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -210,7 +212,8 @@ class Sandbox : public Praline::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()
