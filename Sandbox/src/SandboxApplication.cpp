@@ -94,7 +94,7 @@ public:
 			}
 		)";
 
-		m_Shader = Praline::Shader::Create(vertexSource, fragmentSource);
+		m_Shader = Praline::Shader::Create("VertexPosColor", vertexSource, fragmentSource);
 
 		std::string vertexSourceSquare = R"(
 			#version 330 core
@@ -129,15 +129,15 @@ public:
 			}
 		)";
 
-		m_FlatColorShader = Praline::Shader::Create(vertexSourceSquare, fragmentSourceSquare);
+		m_FlatColorShader = Praline::Shader::Create("FlatColor", vertexSourceSquare, fragmentSourceSquare);
 
-		m_TextureShader = Praline::Shader::Create("assets/shaders/Texture.glsl");
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
 		m_Texture = Praline::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_TextureCZ = Praline::Texture2D::Create("assets/textures/CZ.png");
 
-		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Praline::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Praline::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Praline::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Praline::Timestep timestep) override
@@ -163,11 +163,12 @@ public:
 			}
 		}
 
+		auto textureShader = m_ShaderLibrary.Get("Texture");
 		m_Texture->Bind();
-		Praline::Renderer::Submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Praline::Renderer::Submit(textureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		m_TextureCZ->Bind();
-		Praline::Renderer::Submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Praline::Renderer::Submit(textureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		// Triangle
 		//Praline::Renderer::Submit(m_Shader, m_VertexArray);
@@ -225,13 +226,13 @@ public:
 
 	}
 private:
+	Praline::ShaderLibrary m_ShaderLibrary;
 	Praline::Ref<Praline::Shader> m_Shader;
 	Praline::Ref<Praline::VertexArray> m_VertexArray;
 
 	Praline::Ref<Praline::Shader> m_FlatColorShader;
 	Praline::Ref<Praline::VertexArray> m_SquareVertexArray;
 
-	Praline::Ref<Praline::Shader> m_TextureShader;
 	Praline::Ref<Praline::Texture> m_Texture;
 
 	Praline::Ref<Praline::Texture> m_TextureCZ;

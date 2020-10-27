@@ -11,11 +11,12 @@ namespace Praline
 	{
 	public:
 		OpenGLShader(const std::string& filePath);
-		OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource);
+		OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
 		virtual ~OpenGLShader() override;
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+		virtual const std::string& GetName() const override { return m_Name; }
 
 		virtual void UploadUniformMat3(const std::string& name, const glm::mat3& matrix);
 		virtual void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
@@ -33,6 +34,7 @@ namespace Praline
 
 	private:
 		uint32_t m_RendererID;
+		std::string m_Name;
 	};
 }
 
