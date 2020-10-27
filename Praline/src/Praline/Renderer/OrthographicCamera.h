@@ -8,7 +8,9 @@ namespace Praline
 	{
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
-		~OrthographicCamera();
+		~OrthographicCamera() = default;
+
+		void SetProjection(float left, float right, float bottom, float top);
 
 		inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
 		inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }

@@ -11,6 +11,7 @@
 #include "Praline/Input.h"
 #include "Praline/KeyCodes.h"
 #include "Praline/MouseButtonCodes.h"
+#include "Praline/OrthographicCameraController.h"
 
 #include "Praline/ImGui/ImGuiLayer.h"
 
