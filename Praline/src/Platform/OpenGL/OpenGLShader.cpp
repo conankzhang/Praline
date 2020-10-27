@@ -99,7 +99,10 @@ namespace Praline
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
 		GLuint program = glCreateProgram();
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
+		PRALINE_CORE_ASSERT(shaderSources.size() <= 2, "Only support 2 shaders!");
+
+		std::array<GLenum, 2> glShaderIDs;
+		int glShaderIDIndex = 0;
 		for (auto&& [type, shaderSource] : shaderSources)
 		{
 			GLuint shader = glCreateShader(type);
@@ -128,7 +131,7 @@ namespace Praline
 			}
 
 			glAttachShader(program, shader);
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIDIndex++] = shader;
 		}
 		glLinkProgram(program);
 
@@ -192,7 +195,7 @@ namespace Praline
 	{
 		std::string result;
 
-		std::ifstream in(filePath, std::ios::in, std::ios::binary);
+		std::ifstream in(filePath, std::ios::in | std::ios::binary);
 		if (in)
 		{
 			in.seekg(0, std::ios::end);
